@@ -21,16 +21,17 @@ function rollDice(text) {
   return undefined;
 }
 
-const Row = ({ index, style }) => (
-  <div style={style}>Row {index} {rollDice("2d6")}</div>
+const Row = ({ index, style, data }) => (
+  <div style={style}>Row {index} {rollDice(data)}</div>
 );
 
-const DiceList = () => (
+const DiceList = ({ diceText }) => (
   <List
     height={150}
     itemCount={1000}
     itemSize={35}
     width={300}
+    itemData={diceText}
   >
     {Row}
   </List>
@@ -68,7 +69,9 @@ function App() {
             event.preventDefault();
           }}
         />
-        <DiceList></DiceList>
+        <DiceList
+          diceText={diceText}
+        />
       </header>
     </div>
   );
