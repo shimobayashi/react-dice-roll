@@ -29,7 +29,7 @@ const Row = ({ index, style, data }) => (
 
 const DiceList = ({ diceText }) => (
   <List
-    height={150}
+    height={300}
     itemCount={1000}
     itemSize={35}
     width={300}
