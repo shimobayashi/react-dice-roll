@@ -39,14 +39,13 @@ const DiceList = ({ diceText }) => (
   </List>
 );
 
-function InputDiceForm({ diceText, onChange = f => f, onSubmit = f => f }) {
+function InputDiceForm({ diceText, onChange = f => f }) {
   return (
-    <form onSubmit={onSubmit}>
+    <form>
       <label>
         Dice:
         <input type="text" value={diceText} onChange={onChange} placeholder="2d6" />
       </label>
-      <input type="submit" value="Submit" />
     </form>
   )
 }
@@ -61,14 +60,6 @@ function App() {
           diceText={diceText}
           onChange={event => {
             setDiceText(event.target.value);
-          }}
-          onSubmit={event => {
-            const sum = rollDice(diceText, '');
-            if (sum) {
-              alert(sum);
-            }
-
-            event.preventDefault();
           }}
         />
         <DiceList
