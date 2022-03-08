@@ -26,7 +26,7 @@ const Row = ({ index, style, data }) => (
   <div style={style}>Row {index} {rollDice(data, index)}</div>
 );
 
-const DiceList = ({ diceText }) => (
+const RolledDicesList = ({ diceText }) => (
   <List
     height={300}
     itemCount={1000}
@@ -61,7 +61,7 @@ function App() {
             setDiceText(event.target.value);
           }}
         />
-        <DiceList
+        <RolledDicesList
           diceText={diceText}
         />
       </header>
