@@ -2,8 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
+import seedrandom from 'seedrandom';
 
-function rollDice(text) {
+function rollDice(text, seed) {
   const regexp = /^(\d+)d(\d+)$/;
   const match = regexp.exec(text);
 
@@ -11,8 +12,9 @@ function rollDice(text) {
     const number = parseInt(match[1]);
     const surfaces = parseInt(match[2]);
     let sum = 0;
+    const rng = seedrandom(seed);
     for (let i = 0;i < number;i++) {
-      sum += Math.floor(surfaces * Math.random()) + 1;
+      sum += Math.floor(surfaces * rng()) + 1;
     }
 
     return sum;
@@ -22,7 +24,7 @@ function rollDice(text) {
 }
 
 const Row = ({ index, style, data }) => (
-  <div style={style}>Row {index} {rollDice(data)}</div>
+  <div style={style}>Row {index} {rollDice(data, index)}</div>
 );
 
 const DiceList = ({ diceText }) => (
@@ -61,7 +63,7 @@ function App() {
             setDiceText(event.target.value);
           }}
           onSubmit={event => {
-            const sum = rollDice(diceText);
+            const sum = rollDice(diceText, '');
             if (sum) {
               alert(sum);
             }
