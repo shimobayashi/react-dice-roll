@@ -6,6 +6,7 @@ import seedrandom from 'seedrandom';
 function rollDice(text, seed) {
   const regexp = /^(\d+)d(\d+)$/;
   const match = regexp.exec(text);
+  let result = '';
 
   if (match && match.length >= 2) {
     const number = parseInt(match[1]);
@@ -13,17 +14,21 @@ function rollDice(text, seed) {
     let sum = 0;
     const rng = seedrandom(seed);
     for (let i = 0;i < number;i++) {
-      sum += Math.floor(surfaces * rng()) + 1;
+      const r = Math.floor(surfaces * rng()) + 1;
+      result += r;
+      if (i < number - 1) {
+        result += '+';
+      }
+      sum += r;
     }
-
-    return sum;
+    result += '=' + sum;
   }
 
-  return undefined;
+  return result;
 }
 
 const Row = ({ index, style, data }) => (
-  <div style={style}>Row {index} {rollDice(data, index)}</div>
+  <div style={style}>No.{index + 1}: {rollDice(data, index)}</div>
 );
 
 const RolledDicesList = ({ diceText }) => (
@@ -31,7 +36,7 @@ const RolledDicesList = ({ diceText }) => (
     height={300}
     itemCount={1000}
     itemSize={35}
-    width={300}
+    width={600}
     itemData={diceText}
   >
     {Row}
