@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
 
 function rollDice(text) {
@@ -36,46 +36,38 @@ const DiceList = () => (
   </List>
 );
 
-class InputDiceForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: '' };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-  
-  handleSubmit(event) {
-    const sum = rollDice(this.state.value);
-    if (sum) {
-      alert(sum);
-    }
-
-    event.preventDefault();
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Dice:
-          <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="2d6" />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    )
-  }
+function InputDiceForm({ diceText, onChange = f => f, onSubmit = f => f }) {
+  return (
+    <form onSubmit={onSubmit}>
+      <label>
+        Dice:
+        <input type="text" value={diceText} onChange={onChange} placeholder="2d6" />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  )
 }
 
 function App() {
+  const [diceText, setDiceText] = useState('');
+
   return (
     <div className="App">
       <header className="App-header">
-        <InputDiceForm />
+        <InputDiceForm
+          diceText={diceText}
+          onChange={event => {
+            setDiceText(event.target.value);
+          }}
+          onSubmit={event => {
+            const sum = rollDice(diceText);
+            if (sum) {
+              alert(sum);
+            }
+
+            event.preventDefault();
+          }}
+        />
         <DiceList></DiceList>
       </header>
     </div>
