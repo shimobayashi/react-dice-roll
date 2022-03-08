@@ -38,7 +38,7 @@ const DiceList = ({ diceText }) => (
   </List>
 );
 
-function InputDiceForm({ diceText, onChange = f => f }) {
+function InputDiceTextForm({ diceText, onChange = f => f }) {
   return (
     <form>
       <label>
@@ -55,7 +55,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <InputDiceForm
+        <InputDiceTextForm
           diceText={diceText}
           onChange={event => {
             setDiceText(event.target.value);
